@@ -59,6 +59,7 @@ class AddEditTodoViewModel @Inject constructor(
             is AddEditTodoEvent.OnDescriptionChange->{
                 description=event.description
             }
+            is AddEditTodoEvent.OnPop->sendUiEvent(UiEvent.PopBackStack)
             is AddEditTodoEvent.OnSaveTodoClick  ->{
                 viewModelScope.launch {
                     if(title.isBlank()){

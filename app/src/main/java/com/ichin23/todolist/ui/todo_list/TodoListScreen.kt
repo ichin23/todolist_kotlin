@@ -3,6 +3,7 @@ package com.ichin23.todolist.ui.todo_list
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,6 +29,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ichin23.todolist.ui.theme.TodoListTheme
@@ -86,9 +88,11 @@ fun TodoListScreen(
         }
     ) {
         LazyColumn(
+
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it)
+                .padding(it),
+            verticalArrangement = if(todo.value.isEmpty()) Arrangement.Center else Arrangement.Top
         ) {
             items(todo.value) { todo ->
                 TodoItem(
@@ -99,6 +103,15 @@ fun TodoListScreen(
                         .clickable { viewModel.onEvent(TodoListEvent.OnTodoClick(todo)) }
                         .padding(16.dp)
                 )
+            }
+            
+            if(todo.value.isEmpty()){
+                item {
+                    Text(
+                        text = "Nenhuma tarefa cadastrada",
+                        modifier= Modifier.fillMaxSize(),
+                        textAlign = TextAlign.Center
+                )}
             }
         }
     }
